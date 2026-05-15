@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Acesso Exclusivo</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    html,body{
+      width:100%;
+      min-height:100%;
+    }
+
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,#070b1a,#111827);
+      overflow:hidden;
+      padding:20px;
+      cursor:pointer;
+      touch-action:manipulation;
+    }
+
+    .click-area{
+      width:100%;
+      max-width:380px;
+      text-align:center;
+      padding:45px 24px;
+      border-radius:28px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 20px 60px rgba(0,0,0,.45);
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .gift-box{
+      position:relative;
+      width:180px;
+      height:180px;
+      margin:0 auto 28px;
+      animation:wiggle 1.8s ease-in-out infinite;
+      pointer-events:none;
+    }
+
+    @keyframes wiggle{
+      0%,100%{transform:rotate(0)}
+      20%{transform:rotate(-2deg)}
+      40%{transform:rotate(2deg)}
+      60%{transform:rotate(-1deg)}
+      80%{transform:rotate(1deg)}
+    }
+
+    .gift-body{
+      position:absolute;
+      bottom:0;
+      width:180px;
+      height:130px;
+      border-radius:20px;
+      background:linear-gradient(135deg,#ec4899,#e11d48);
+      box-shadow:0 10px 30px rgba(236,72,153,.35);
+    }
+
+    .gift-ribbon-v{
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      width:24px;
+      height:100%;
+      background:linear-gradient(180deg,#fde047,#f59e0b);
+      z-index:2;
+    }
+
+    .gift-ribbon-h{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:100%;
+      height:24px;
+      background:linear-gradient(90deg,#fde047,#f59e0b);
+      z-index:2;
+    }
+
+    .gift-lid{
+      position:absolute;
+      top:0;
+      left:-10px;
+      width:200px;
+      height:60px;
+      border-radius:16px;
+      background:linear-gradient(135deg,#fb7185,#ec4899);
+      transition:all .35s ease;
+      z-index:3;
+    }
+
+    .gift-lid-ribbon{
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      width:24px;
+      height:100%;
+      background:linear-gradient(180deg,#fde047,#f59e0b);
+    }
+
+    .gift-bow{
+      position:absolute;
+      top:-22px;
+      left:50%;
+      transform:translateX(-50%);
+      font-size:38px;
+      z-index:4;
+      transition:all .35s ease;
+    }
+
+    .opened{
+      animation:none;
+    }
+
+    .opened .gift-lid{
+      transform:translateY(-65px) rotate(-25deg);
+      opacity:0;
+    }
+
+    .opened .gift-bow{
+      transform:translateX(-50%) translateY(-65px) scale(0);
+      opacity:0;
+    }
+
+    .hint{
+      color:#fff;
+      font-size:22px;
+      font-weight:800;
+      margin-bottom:10px;
+      pointer-events:none;
+    }
+
+    .sub{
+      color:rgba(255,255,255,.75);
+      font-size:15px;
+      pointer-events:none;
+    }
+
+    .fallback{
+      display:none;
+      margin-top:20px;
+    }
+
+    .fallback a{
+      display:inline-block;
+      padding:14px 22px;
+      border-radius:14px;
+      background:#229ED9;
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+    }
+  </style>
+</head>
+
+<body onclick="openGift()">
+
+  <main class="click-area" id="clickArea">
+    <div class="gift-box" id="giftBox">
+      <div class="gift-bow">🎀</div>
+      <div class="gift-lid">
+        <div class="gift-lid-ribbon"></div>
+      </div>
+      <div class="gift-body">
+        <div class="gift-ribbon-v"></div>
+        <div class="gift-ribbon-h"></div>
+      </div>
+    </div>
+
+    <div class="hint">Toque para abrir</div>
+    <div class="sub">Você recebeu um acesso exclusivo</div>
+
+    <div class="fallback" id="fallback">
+      <a href="https://tikbot.shop/r/press">
+        Abrir manualmente
+      </a>
+    </div>
+  </main>
+
+  <script>
+    const REDIRECT_URL = "https://tikbot.shop/r/press";
+    let opened = false;
+
+    function openGift(){
+      if(opened) return;
+      opened = true;
+
+      document.getElementById("giftBox").classList.add("opened");
+
+      setTimeout(function(){
+        window.location.href = REDIRECT_URL;
+      }, 250);
+
+      setTimeout(function(){
+        document.getElementById("fallback").style.display = "block";
+      }, 1200);
+    }
+  </script>
+
+</body>
+</html>
